@@ -124,21 +124,25 @@ class TT:
         if cnt > 0:
             self.sc += (cnt ** 2) * 100
             self.lv = self.sc // 1000 + 1
-
+    def G3(self):
+        print("Вы проиграли! в файле settings.txt ваши настройки, рейтинги в файле scores.txt")
+        try:
+            with open("scores.txt", "a") as f:
+                f.write(str('Проигрыш') + " " + datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + "\n")
+        except:
+            pass
     def mv(self, h, v):
         try:
             p, rr, x, y = self.cp
         except:
-            print("Вы проиграли")
-            try:
-                with open("scores.txt", "a") as f:
-                    f.write(str('Проигрыш') + " " + datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + "\n")
-            except:
-                pass
-        if self.vl(p, rr, x + h, y + v):
-            self.cp[2] += h
-            self.cp[3] += v
-            return True
+            self.G3()
+        try:
+            if self.vl(p, rr, x + h, y + v):
+                    self.cp[2] += h
+                    self.cp[3] += v
+                    return True
+        except:
+            self.G3()
         return False
 
     def rt(self):
@@ -382,7 +386,7 @@ def st(sc, ft, stt):
     btn_dec = Btn((SW - 250) // 2, 220, 250, 50, "Уменьшить сложность", "dec", ft)
     btn_reg = Btn((SW - 250) // 2, 290, 250, 50, "Сменить регион", "reg", ft)
     btn_back = Btn((SW - 250) // 2, 360, 250, 50, "Назад", "back", ft)
-    regs = ["US", "EU", "RU"]
+    regs = ["США", "ЕвроСоюз", "Российская Федерация  "]
     i = regs.index(stt["r"]) if stt["r"] in regs else 0
     while True:
         m = pygame.mouse.get_pos()
